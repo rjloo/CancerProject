@@ -1,8 +1,6 @@
 ---
 title: "Cancer Linear Regression"
-output:
-  pdf_document: default
-  html_document: default
+output: rmarkdown::github_document
 ---
 
 ### Abstract
