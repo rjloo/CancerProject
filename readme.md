@@ -13,11 +13,11 @@ This data comes from the US Government, and is about lung cancer incidence and m
 
 ### Data Description
 
-#### Data Cleaning
+##### Data Cleaning
 
 Some values for the rate and average count of death and incidence were not reported, due to either confidentiality or because the counts were less than 16. I made the decision to set these to NA rather than impute them, because I felt that I didn't enough reference to choose a value to set them to, even with the detail that counts were less than 16. Although deleting these observations adds bias, I felt that this was safer than adding a cluster of observations with inaccurate values. Some values for 'Age Adjusted Incidence Rate per 100,000' were marked with the clause that these didn't include case diagnosed in other states that had certain confidentiality rules. I decided to keep these observations in for now, keeping track of them just in case they stand out later in the analysis. The full details can be found in the Appendix under DataCleaning.R.
 
-#### Initial Variable Selection
+##### Initial Variable Selection
 
 First, I dropped variables that are clearly uninteresting. I removed 'County.x' and 'County.y', because this locational information is already contained in the 'FIPS' variable. I also removed 'Met Objective of 45.5? (1)' because this is just about goals set by Center for Disease Control and Population.
 
@@ -125,11 +125,11 @@ There appear to be general linear relationships between the 5-year trends and th
 
 
 
-#### Adding Additional Data Point
+##### Adding Additional Data Point
 
 For my additional data point, which I named Test (in the FIPS column), I decided to pick a random value for each variable, within the existing values. The reason for this was to test a random combination of values for each variable, and see if it stands out from the rest of the data.
 
-### Final Pairs Plot of Numeric Variables to Assess Relationships
+##### Final Pairs Plot of Numeric Variables to Assess Relationships
 
 
 ```{.r .bg-danger}
@@ -147,7 +147,7 @@ In terms of multicollinearity, I don't see any issues. For relationships with 'A
 
 
 
-#### Finding A Model
+##### Finding A Model
 
 First, from fitting the full model, I obtain:
 
@@ -250,7 +250,7 @@ anova(cancer_lm_full, final_model)
 
 The p-value is large, so we fail to reject the null hypothesis and conclude that there is no difference in the models.
 
-#### Assessing the Fit
+##### Assessing the Fit
 
 ```{rclass.source="bg-danger", class.output="bg-warning"}
 plot(final_model, 1)
@@ -289,7 +289,7 @@ Because I have potential outliers, I decided to fit a Huber robust model (in Met
 
 Additionally, when checked out on a map, these cities are within 1000 miles of each other. It's possible that there is another factor that is influencing their results, so I decided to leave the points in.
 
-#### Checking for Multicolinearity
+##### Checking for Multicolinearity
 
 
 ```{.r .bg-danger}
@@ -316,7 +316,7 @@ vif(final_model)
 ```
 None of the variance inflation factors are above 5, so there is no evidence here for multicollinearity.
 
-#### Model Validation
+##### Model Validation
 
 
 ```{.r .bg-danger}
@@ -343,11 +343,11 @@ final_model$coefficients
 ## `Recent 5-year trend in incidence rates`:falling_incidence_rates 
 ##                                                      -0.30000812
 ```
-##### Coefficients
+###### Coefficients
 
 'Age-Adjusted Death Rates' being positively associated with 'Recent 5-Year Trend (2) in Death Rates' and 'Age Adjusted Incidence Rate per 100,000' seems reasonable. But because it is positively correlated with 'Age Adjusted Incidence Rate per 100,000', it doesn't really make sense that it is negatively associated with 'Recent 5-year trend in incidence rates'. It's possible that it's capturing some sort of negative relationship that exists as a result of some other factor.
 
-##### Slope Standard Error
+###### Slope Standard Error
 
 ```{.r .bg-danger}
 summary(final_model)
