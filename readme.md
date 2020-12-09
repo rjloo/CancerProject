@@ -289,7 +289,7 @@ Because I have potential outliers, I decided to fit a Huber robust model (in Met
 
 Additionally, when checked out on a map, these cities are within 1000 miles of each other. It's possible that there is another factor that is influencing their results, so I decided to leave the points in.
 
-##### Checking for Multicolinearity
+##### Checking for Multicollinearity
 
 
 ```{.r .bg-danger}
